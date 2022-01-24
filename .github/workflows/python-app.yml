@@ -37,6 +37,6 @@ jobs:
     - name: Slack Notification
       uses: rtCamp/action-slack-notify@v2
       env:
-        SLACK_MESSAGE: ${{ steps.report.time_spent }}
+        SLACK_MESSAGE: ${{ steps.report.outputs.time_spent }}
         SLACK_TITLE: TimeSpender
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
