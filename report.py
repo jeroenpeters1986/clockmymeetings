@@ -1,10 +1,15 @@
 import datetime
 import os
+import sys
 import time
 from clockify_api_client.client import ClockifyAPIClient
 from dotenv import load_dotenv
 
 load_dotenv()
+
+
+def print_to_stdout(*a):
+    print(*a, file=sys.stdout)
 
 
 def get_work_week_span():
@@ -38,8 +43,8 @@ CLOCKIFY_API_KEY = os.getenv('CLOCKIFY_API_KEY')
 client = ClockifyAPIClient().build(CLOCKIFY_API_KEY, CLOCKIFY_API_URL)
 workweek = get_work_week_span()
 
-print("       Tijdsperiode", workweek[0][:10], "-", workweek[1][:10])
-print("     ========================================\n")
+print_to_stdout("       Tijdsperiode", workweek[0][:10], "-", workweek[1][:10])
+print_to_stdout("     ========================================\n")
 
 workspace_id = client.workspaces.get_workspaces()[0]['id']
 current_user = client.users.get_current_user()
@@ -63,13 +68,13 @@ for entry in entries:
 
     for tag_id in entry['tagIds']:
         if tag_id == meeting_tag_id:
-            print("  MEETING :  ", entry['description'], seconds_to_hours(total_entry_seconds))
+            print_to_stdout("  MEETING :  ", entry['description'], seconds_to_hours(total_entry_seconds))
             meeting_seconds += total_entry_seconds
 
     total_seconds += total_entry_seconds
 
-print("\n===============================================")
-print("Totale tijd geregistreerd:              {}".format(seconds_to_hours(total_seconds)))
-print("Totale tijd in meeting:                 {}".format(seconds_to_hours(meeting_seconds)))
-print("Percentage tijd getagd met 'Meeting':   {:.2f}%".format(100/total_seconds * meeting_seconds))
+print_to_stdout("\n===============================================")
+print_to_stdout("Totale tijd geregistreerd:              {}".format(seconds_to_hours(total_seconds)))
+print_to_stdout("Totale tijd in meeting:                 {}".format(seconds_to_hours(meeting_seconds)))
+print_to_stdout("Percentage tijd getagd met 'Meeting':   {:.2f}%".format(100/total_seconds * meeting_seconds))
 
