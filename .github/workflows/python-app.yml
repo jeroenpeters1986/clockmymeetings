@@ -33,7 +33,7 @@ jobs:
         TIMEREPORT="${TIMEREPORT//'%'/'%25'}"
         TIMEREPORT="${TIMEREPORT//$'\n'/'%0A'}"
         TIMEREPORT="${TIMEREPORT//$'\r'/'%0D'}"
-        echo "::set-output name=time_spent::TIMEREPORT\n"
+        echo "::set-output name=time_spent::$TIMEREPORT"
     - name: Slack Notification
       uses: rtCamp/action-slack-notify@v2
       env:
