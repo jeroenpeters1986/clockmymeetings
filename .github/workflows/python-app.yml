@@ -25,14 +25,18 @@ jobs:
         python -m pip install --upgrade pip
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Get data from Clockify
-      id: report-time
+      id: report
       env:
         CLOCKIFY_API_KEY: ${{ secrets.CLOCKIFY_API_KEY }}
       run: |
-        echo "::set-output name=TIMESPENT::$(python report.py)\n"
+        TIMEREPORT=$(python report.py)
+        TIMEREPORT="${TIMEREPORT//'%'/'%25'}"
+        TIMEREPORT="${TIMEREPORT//$'\n'/'%0A'}"
+        TIMEREPORT="${TIMEREPORT//$'\r'/'%0D'}"
+        echo "::set-output name=time_spent::TIMEREPORT\n"
     - name: Slack Notification
       uses: rtCamp/action-slack-notify@v2
       env:
-        SLACK_MESSAGE: ${{ steps.report-time.outputs.TIMESPENT }}
+        SLACK_MESSAGE: ${{ steps.report.time_spent }}
         SLACK_TITLE: TimeSpender
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
