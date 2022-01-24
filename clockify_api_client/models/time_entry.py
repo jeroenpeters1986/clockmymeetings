@@ -19,9 +19,10 @@ class TimeEntry(AbstractClockify):
         try:
             if params:
                 url_params = urlencode(params, doseq=True)
-                url = self.base_url + '/workspaces/' + workspace_id + '/user/' + user_id + '/time-entries?' + url_params
+                url = f"{self.base_url}/workspaces/{workspace_id}/user/{user_id}/time-entries?{url_params}"
+
             else:
-                url = self.base_url + '/workspaces/' + workspace_id + '/user/' + user_id + '/time-entries/'
+                url = f"{self.base_url}/workspaces/{workspace_id}/user/{user_id}/time-entries/"
             time_entries_list = self.get(url)
             return time_entries_list
         except Exception as e:
