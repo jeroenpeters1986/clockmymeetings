@@ -5,6 +5,7 @@ factory-boy==3.2.1
 Faker==11.3.0
 idna==3.3
 python-dateutil==2.8.2
+python-dotenv==0.19.2
 requests==2.27.1
 six==1.16.0
 text-unidecode==1.3

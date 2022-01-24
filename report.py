@@ -1,6 +1,10 @@
 import datetime
+import os
 import time
 from clockify_api_client.client import ClockifyAPIClient
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 def get_work_week_span():
@@ -28,11 +32,10 @@ def seconds_to_hours(seconds):
     return datetime.timedelta(seconds=seconds)
 
 
-API_KEY = 'YjdkZWExZWQtOTEzNS00ODk3LWIyZGQtNTMxMWY2YWM2ZGQw'
-API_URL = 'api.clockify.me/v1'
-CLOCKIFY_SANDWAVE_WORKSPACE = '5e972053ea8094116e902093'
+CLOCKIFY_API_URL = 'api.clockify.me/v1'
+CLOCKIFY_API_KEY = os.getenv('CLOCKIFY_API_KEY')
 
-client = ClockifyAPIClient().build(API_KEY, API_URL)
+client = ClockifyAPIClient().build(CLOCKIFY_API_KEY, CLOCKIFY_API_URL)
 workweek = get_work_week_span()
 
 print("       Tijdsperiode", workweek[0][:10], "-", workweek[1][:10])
