@@ -85,4 +85,3 @@ print("Totale tijd in meeting:                 {}".format(
     seconds_to_hours(meeting_seconds)))
 print("Percentage tijd getagd met 'Meeting':   {:.2f}%".format(
     100/total_seconds * meeting_seconds))
-
